@@ -6,24 +6,29 @@ def count_words(book):
     count = 0
     for word in book:
         count += 1
-    return f"The book contains {count} words!"
+    return count
 
 def count_letters(book):
     count_letters = {}
-
-    for word in book:
-        words = word.split()
-        for letter in words:
-            characters = letter.lower()
-            if characters.isalpha():
-                if characters in count_letters:
-                    count_letters[characters] += 1
+    words = book.split()
+    
+    for letter in words:
+        characters = letter.lower()
+        for char in characters:
+            if char.isalpha():
+                if char in count_letters:
+                    count_letters[char] += 1
                 else:
-                    count_letters[characters] = 1
+                    count_letters[char] = 1
     return count_letters
 
-print(count_words(content))
-print(count_letters(content))
 
-# print(count_letters)
-# print(dir(count_letters))
+sorted_values = dict(sorted(count_letters(content).items(), key= lambda item: item[1], reverse=True ))
+
+print("--- Begin report of books/frankenstein.txt ---")
+print(f"{count_words(content)} words found in the document\n")
+
+for k, v in sorted_values.items():
+    print(f"The '{k}' character was found {v}")
+        
+print("\n--- End report ---")
