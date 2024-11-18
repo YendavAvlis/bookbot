@@ -1,5 +1,3 @@
-with open('books/frankenstein.txt') as f:
-    content = f.read()
 
 def count_words(book):
     book = book.split()
@@ -23,12 +21,25 @@ def count_letters(book):
     return count_letters
 
 
-sorted_values = dict(sorted(count_letters(content).items(), key= lambda item: item[1], reverse=True ))
+try:
+    book_name = input("Enter book name: ")
+    with open(f"books/{book_name.lower()}.txt") as f:
+        content = f.read()
+    
+    sorted_values = dict(sorted(count_letters(content).items(), key= lambda item: item[1], reverse=True ))
 
-print("--- Begin report of books/frankenstein.txt ---")
-print(f"{count_words(content)} words found in the document\n")
+    print("--- Begin report of books/frankenstein.txt ---")
+    print(f"{count_words(content)} words found in the document\n")
 
-for k, v in sorted_values.items():
-    print(f"The '{k}' character was found {v}")
-        
-print("\n--- End report ---")
+    for k, v in sorted_values.items():
+        print(f"The '{k}' character was found {v}")
+            
+    print("\n--- End report ---")
+
+except FileNotFoundError:
+    if book_name == "":
+        print('Please, type the name of the book')
+    else:
+        print(f" The file {book_name}.txt does not exist")
+
+
